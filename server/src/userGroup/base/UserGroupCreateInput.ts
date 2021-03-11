@@ -1,0 +1,2 @@
+class UserGroupCreateInput {}
+export { UserGroupCreateInput };

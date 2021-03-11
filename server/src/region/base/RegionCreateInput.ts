@@ -1,0 +1,2 @@
+class RegionCreateInput {}
+export { RegionCreateInput };

@@ -1,0 +1,2 @@
+class ApplicationUpdateInput {}
+export { ApplicationUpdateInput };
