@@ -1,0 +1,2 @@
+class UserGroupUpdateInput {}
+export { UserGroupUpdateInput };
