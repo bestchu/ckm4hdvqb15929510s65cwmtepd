@@ -1,0 +1,2 @@
+class RegionUpdateInput {}
+export { RegionUpdateInput };
