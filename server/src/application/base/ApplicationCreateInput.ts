@@ -1,0 +1,2 @@
+class ApplicationCreateInput {}
+export { ApplicationCreateInput };

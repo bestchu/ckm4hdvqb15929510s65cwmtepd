@@ -1,0 +1,79 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("POSTGRESQL_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt     DateTime      @default(now())
+  id            String        @id @default(cuid())
+  password      String
+  roles         String[]
+  updatedAt     DateTime      @updatedAt
+  username      String        @unique
+  name          String?
+  profile       UserProfile[]
+  authLogs      UserAuthLog[]
+  userGroups    UserGroup[]   @relation(name: "UserGroupsOnUsers")
+  managerGroups UserGroup[]   @relation(name: "manager")
+}
+
+model UserProfile {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId])
+  userId    String
+}
+
+model Region {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Application {
+  createdAt   DateTime     @default(now())
+  id          String       @id @default(cuid())
+  permissions Permission[]
+  updatedAt   DateTime     @updatedAt
+  roles       Role[]
+}
+
+model UserGroup {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  manager   User?    @relation(name: "manager", fields: [managerId])
+  managerId String?
+  updatedAt DateTime @updatedAt
+  users     User[]   @relation(name: "UserGroupsOnUsers")
+}
+
+model Permission {
+  createdAt DateTime    @default(now())
+  id        String      @id @default(cuid())
+  updatedAt DateTime    @updatedAt
+  app       Application @relation(fields: [appId])
+  appId     String
+  roles     Role[]
+}
+
+model Role {
+  app         Application  @relation(fields: [appId])
+  appId       String
+  createdAt   DateTime     @default(now())
+  id          String       @id @default(cuid())
+  permissions Permission[]
+  updatedAt   DateTime     @updatedAt
+}
+
+model UserAuthLog {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId])
+  userId    String
+}
